@@ -19,6 +19,7 @@
 
       const ajax = new XMLHttpRequest(); // buat object
       ajax.open("GET", "api/hello.json"); // gunakan method open() dan proses apa yang diinginkan
+      // ajax.onload = callback; // menggunakan onload
       ajax.addEventListener("load", function () {
         const json = JSON.parse(ajax.responseText); // convert JSON ke Object yang isi ajax nya akan di convert menjadi text/string
 
