@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menerima Data di AJAX</title>
+  </head>
+  <body>
+    <h1 id="response"></h1>
+    <script>
+      // Menerima Data di AJAX
+      // AJAX biasanya digunakan untuk mengirim data ke Server atau menerima data dari Server
+      // Tiap request AJAX yang dilakukan, biasanya kita ingin mendapat informasi response yang diberikan oleh server
+      // Kita tidak bisa langsung mengambil response AJAX, karena porses AJAX adalah "Async", sehingga kita perlu menunggu sampai proses Async nya selesai.
+      // Untuk mendapatkan informasi AJAX, kita bisa menggunakan AJAX Callback, yang akan dieksekusi setelah proses AJAX selesai
+      // Untuk menambahkan AJAX Callback, kita bisa tambahkan menggunakan event load / addeventlistener.
+      //  https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/load_event
+      // Dan untuk mengambil datanya dari server, kita bisa menggunakan property response text
+
+      const ajax = new XMLHttpRequest(); // buat object
+      ajax.open("GET", "api/hello.json"); // gunakan method open() dan proses apa yang diinginkan
+      ajax.addEventListener("load", function () {
+        const json = JSON.parse(ajax.responseText); // convert JSON ke Object yang isi ajax nya akan di convert menjadi text/string
+
+        const header = document.getElementById("response");
+        header.textContent = json.response; // hasil response
+      });
+
+      ajax.send(); // harus selalu di inisialisasi
+    </script>
+  </body>
+</html>
