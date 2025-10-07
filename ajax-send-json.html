@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax Send JSON</title>
+  </head>
+  <body>
+    <form>
+      <label for="username">
+        Username :
+        <input type="text" id="username" name="username" />
+      </label>
+      <br />
+      <label for="password">
+        Password
+        <input type="password" id="password" name="password" />
+      </label>
+      <br />
+      <input type="button" value="Login" id="login" />
+    </form>
+    <h1 id="response"></h1>
+    <script>
+      // Ajax Send JSON
+      // Saat kita menggunakan AJAX, biasanya bukan hanya untuk mengambil data dari Server
+      // Kadan kita juga ingin mengirim data dari Client ke Server, misalnya kita membaca semua data di Web Form, lalu mengirimkan ke Server menggunakan AJAX
+      // Untuk melakukan ini, kita bisa menambahkan parameterdata yang akan kita kirim pada method sen() milik XMLHttpRequest
+      // https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/send
+
+      function doLogin() {
+        const ajax = new XMLHttpRequest();
+        ajax.open("POST", "https://eoxuy22gtqcre64.m.pipedream.net");
+
+        // Onload -> Event handler yang dijalankan ketika proses AJAX telah selesai dan respons dari server sudah diterima sepenuhnya
+        ajax.onload = function () {
+          const response = document.getElementById("response");
+          response.innerText = ajax.responseText;
+        };
+
+        // HTTP Header
+        ajax.setRequestHeader("Content-Type", "application/json");
+
+        // Send AJAX
+        const json = {
+          username: document.getElementById("username").value,
+          password: document.getElementById("password").value,
+        };
+
+        // Convert object JSON
+        ajax.send(JSON.stringify(json));
+      }
+
+      // Event Handler (Ketika di Klik Submit)
+      document.getElementById("login").onclick = doLogin;
+    </script>
+  </body>
+</html>
