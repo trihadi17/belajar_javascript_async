@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax Send Query Param</title>
+  </head>
+  <body>
+    <form>
+      <label for="search">
+        Search :
+        <input type="text" id="search" name="search" />
+      </label>
+      <br />
+      <input type="button" value="Search" id="searchButton" />
+    </form>
+    <h1 id="response"></h1>
+    <script>
+      // URL Search Param
+      // Selain format JSON, kadang saat mengirim data menggunakan AJAX, kita hanya ingin mengirim dalam bentuk Query Parameter (Parameter pada URL, misal id 3)
+      // Pada kasus ini, kita bisa saja mengubah url nya dengan menambahkan Query Parameter, namun ada cara yang lebih mudah, yaitu menggunakan object URLSearchParam
+      // Kita bisa memanfaatkan object URLSearchParam sebelum membuat URL
+      // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+
+      // NOTED : SANGAT BERGUNA JIKA PARAMETER NYA BANYAK TIDAK PERLU TULIS MANUAL SATU PERSATU
+
+      function doSearch() {
+        const ajax = new XMLHttpRequest();
+
+        // URL PARAM
+        const param = new URLSearchParams();
+        param.append("search", document.getElementById("search").value); // Menambahkan parameter search dengan mengambil id : search
+        param.append("filter", document.getElementById("search").value);
+
+        // Hasil nya akan gini sesuai parameter yang kita tambahkan diatas -> search=Pemrograman+JavaScript&filter=Pemrograman+JavaScript
+
+        ajax.open(
+          "GET",
+          `https://eoxuy22gtqcre64.m.pipedream.net?${param.toString()}`
+        );
+
+        // Onload -> Event handler yang dijalankan ketika proses AJAX telah selesai dan respons dari server sudah diterima sepenuhnya
+        ajax.onload = function () {
+          const response = document.getElementById("response");
+          response.innerText = ajax.responseText;
+        };
+
+        ajax.send();
+      }
+
+      // Event Handler (Ketika di Klik Submit)
+      document.getElementById("searchButton").onclick = doSearch;
+    </script>
+  </body>
+</html>
