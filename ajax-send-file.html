@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ajax Send File</title>
+  </head>
+  <body>
+    <h1>Register</h1>
+    <form>
+      <label for="username">
+        Username :
+        <input type="text" id="username" name="username" />
+      </label>
+      <br />
+      <label for="name">
+        Name
+        <input type="name" id="name" name="name" />
+      </label>
+      <br />
+      <label for="profile">
+        Profile
+        <input type="file" id="profile" name="profile" />
+      </label>
+      <br />
+      <input type="button" value="Register" id="register" />
+    </form>
+    <h1 id="response"></h1>
+    <script>
+      // Upload File dengan AJAX
+      // Selain menggunakan JSON, Query Param, Form, kadang kita butuh mengirim file ke Server
+      // Untuk mengirim file ke Server, kita perlu menggunakan object Form Data, lalu kita perlu menambahkan object File ke dalam FormData tersebut
+      // https://developer.mozilla.org/en-US/docs/Web/API/FormData
+      // https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file
+      // https://developer.mozilla.org/en-US/docs/Web/API/File
+      // https://developer.mozilla.org/en-US/docs/Web/API/FileList
+
+      function doLogin() {
+        const ajax = new XMLHttpRequest();
+        ajax.open("POST", "https://eolbps962wh31c2.m.pipedream.net");
+
+        // Onload -> Event handler yang dijalankan ketika proses AJAX telah selesai dan respons dari server sudah diterima sepenuhnya
+        ajax.onload = function () {
+          const response = document.getElementById("response");
+          response.innerText = ajax.responseText;
+        };
+
+        // Inisialisasi Form
+        const form = new FormData();
+        form.append("username", document.getElementById("username").value);
+        form.append("name", document.getElementById("name").value);
+        form.append(
+          "profile",
+          document.getElementById("profile").files.item(0)
+        ); // artinya mengambil file yang pertama
+
+        // Send Form
+        ajax.send(form);
+        // ajax.send(form.toString());
+      }
+
+      // Event Handler (Ketika di Klik Submit)
+      document.getElementById("register").onclick = doLogin;
+    </script>
+  </body>
+</html>
