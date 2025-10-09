@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise</title>
+  </head>
+  <body>
+    <script>
+      // Promise
+      // Promise merupakan proxy untuk sebuah nilai di masa depan (Future) yang belum diketahui saat pembuatan Promise tersebut
+      // Biasanya Promise digunakan sebagai proxy untuk proses Async
+      // Penggunaan Promise sangat mudah dan lebih mirip kode Synchronous
+      // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+
+      // NOTED : Promise ini mengatasi permasalahan dengan callback yang rumit atau banyak cabang nya, sehingga mempersulit program dalam membaca
+
+      // PROMISE STATE
+      // pending (state) -> undefined (result)
+      // flfilled -> value
+      // rejected -> error
+
+      // Syntax Dasar
+      /*  const promise = new Promise(function (resolve, reject) {
+        if (true) {
+          resolve(value); // ini kode yang bersifat asynchronous
+        } else {
+          reject(error); // ini kode yang bersifat asynchronous
+        }
+      }); */
+
+      // AJAX dengan Promise
+      const promise = new Promise(function (resolve, reject) {
+        const ajax = new XMLHttpRequest();
+        ajax.open("GET", "api/product.json");
+        ajax.onload = function () {
+          if (ajax.status === 200) {
+            resolve(ajax.responseText);
+          } else {
+            reject(ajax.responseText);
+          }
+        };
+
+        ajax.send();
+      });
+
+      console.log(promise);
+    </script>
+  </body>
+</html>
