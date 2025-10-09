@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Promise Method</title>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td>Id :</td>
+          <td id="id"></td>
+        </tr>
+        <tr>
+          <td>Name :</td>
+          <td id="name"></td>
+        </tr>
+        <tr>
+          <td>Price :</td>
+          <td id="price"></td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      // Promise Method
+      // Promise memilii tiga method yang bisa kita gunakan
+      // then(parameter) untuk mendapatkan atau mengubah data ketika Promise Sukses
+      // catch(parameter) untuk mendapatkan data error ketika Promise gagal
+      // finally() akan dieksekusi ketika terjadi sukses atau gagal pada Promise
+      //  https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#instance_methods
+
+      // NOTED : then(), bisa di inisialisasikan lebih dari 1
+      // NOTED : finally(), tidak peduli sukses atau gagal, kalau di inisialisasi dia akan muncul
+
+      function getProduct() {
+        return new Promise(function (resolve, reject) {
+          const ajax = new XMLHttpRequest();
+          ajax.open("GET", "api/product.json");
+          ajax.onload = function () {
+            if (ajax.status === 200) {
+              resolve(ajax.responseText);
+            } else {
+              reject(`Error Get Product with response : ${ajax.status}`);
+            }
+          };
+
+          ajax.send();
+        });
+      }
+
+      // Promise Method
+      getProduct()
+        .then(function (response) {
+          return JSON.parse(response); // mengubah dalam bentuk json, "response" ini adalah parameter yang menyimpan data getProduct diatas
+        })
+        .then(function (json) {
+          // NILAI "json" itu udah berubah menjadi json karna dia diambil diatas, ada keterikatan antara then() diatasnya
+          document.getElementById("id").textContent = json.id; // mengubah textContent
+          document.getElementById("name").textContent = json.name;
+          document.getElementById("price").textContent = json.price;
+        })
+        .catch(function (error) {
+          document.getElementById("id").textContent = error;
+          document.getElementById("name").textContent = error;
+          document.getElementById("price").textContent = error;
+        })
+        .finally(() => console.log("finally"));
+    </script>
+  </body>
+</html>
