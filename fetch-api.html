@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fetch API</title>
+  </head>
+  <body>
+    <form>
+      <label for="username">
+        Username :
+        <input type="text" id="username" name="username" />
+      </label>
+      <br />
+      <label for="password">
+        Password
+        <input type="password" id="password" name="password" />
+      </label>
+      <br />
+      <input type="button" value="Login" id="login" />
+    </form>
+    <h1 id="response"></h1>
+    <script>
+      // Fetch API
+      // Fetch API merupakan fitur baru sebagai alternatif AJAX
+      // Saat menggunakan AJAX, kita perlu menggunakan Callback untuk menerima response atau data dari Server, sedangkan Fetch API sudah menggunakan Promise, sehingga penggunaan Fetch API lebih mudah dibandingkan AJAX
+      // Hampor semua browser modern sekarang sudah mendukung menggunakan Fetch API
+      // Apa yang bisa kita lakukan di AJAX, bisa juga kita lakukan di Fetch API
+      // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+      // Request
+      // Saat kita akan mengirim request menggunakan Fetch API, kita perlu membuat object Request
+      // Hal ini menjadi lebih rapi dibandingkan menggunakan AAJAX
+      // Kita bisa membuat object Request, lalu dikirim menggunakan Fetch API
+      // Dan saat membuat Request, kita bisa menentukan data yang ingin kita kirim
+      // https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+      function doLogin() {
+        // Membuat object Request
+        // NOTED : Ada dua cara buat request, bisa menggunakan new Request() atau fetch(), Namun disarankan gunakan new Request
+        const request = new Request("https://eolbps962wh31c2.m.pipedream.net", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          // Isi dari BODY itu bebas, boleh FormData, URLSearchParam, JSON, dll
+          body: JSON.stringify({
+            username: document.getElementById("username").value,
+            password: document.getElementById("password").value,
+          }),
+        });
+
+        // Cara menggunakan Fetch API
+        const response = fetch(request); // Promise<Response>
+
+        // console.log(response);
+        response
+          .then((response) => response.json()) // mengubah ke dalam json
+          .then(function (json) {
+            document.getElementById("response").textContent = json.about; // mengambil atribut json, kebetulan ini  "about". isi dari "about"
+          })
+          .catch(function (error) {
+            document.getElementById("response").textContent = error;
+          });
+      }
+
+      document.getElementById("login").onclick = doLogin;
+    </script>
+  </body>
+</html>
