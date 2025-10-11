@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Async</title>
+  </head>
+  <body>
+    <script>
+      // Async Await
+      // Async Await adalah fitur di JavaScript yang digunakan untuk mempermudah proses pembuatan kode Promise
+      // Dengan menggunakan Async Await, kita bisa membuat Aysnchronous dengan gaya Synchronous
+
+      // ASYNC
+      // Async digunakan untuk menandakan bahwa Function tersebut adalah Async, dan mengembalikan Promise
+      // Dengan menggunakan Async, kita tidak perlu membuat Promise secara manual lagi
+      // NOTED : Sangat disarankan,karena async function ini sudah membungkus Promise
+
+      // Contoh Perbedaan Promise (Manual) & Async Function
+
+      // PROMISE
+      function getNamePromise() {
+        return new Promise(function (resolve, reject) {
+          resolve("Eko Promise"); // return Promise<String> -> Mengembalikan nilai berupa "String"
+        });
+      }
+
+      getNamePromise().then((name) => console.log(name));
+
+      // ASYNC (Function)
+      async function getNameAsync() {
+        return "Eko Async";
+      }
+
+      getNameAsync().then((name) => console.log(name));
+    </script>
+  </body>
+</html>
