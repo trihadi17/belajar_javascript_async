@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Worker</title>
+  </head>
+  <body>
+    <button id="buttonTask">Click Me</button>
+    <script>
+      // Thread di JavaScript
+      // JavaScript adalah "Single Thread" (Single Proses), artinya walaupun proses yang kita buat adalah Async, tapi tetap akan dijalankan dalam Thread (Proses) yang sama
+      // Kemampuan satu Thread dalam mengelola beberapa pekerjaan, dinamakan "Concurrent"
+      // Kemampuan menjalankan beberapa Thread untuk mengelola satu atau lebih pekerjaan, dinamakan "Paralel"
+      // Dan untuk membuat proses secara Paralel, kita bisa menggunakan "Web Worker"
+
+      // Web Worker
+      // Web Worker adalah kemampuan untuk menjalan proses Theread yang berbeda dibanding Main Thread
+      // Keuntungan menggunakan Web Worker adalah jika terdapat proses yang membutuhkan waktu lama, Web kita tidak akan Freeze, karena proses tersebut bisa kita jalankan di Thread yang berbeda dari Main Thread (Yang biasa digunakan oleh UI)
+      // https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API
+
+      // MEMBUAT WORKER
+      // Untuk menggunakan Web Worker API, kita bisa membuat object Worker
+      // https://developer.mozilla.org/en-US/docs/Web/API/Worker
+      // Saat kita membuat object Wroker, Worker tidak akan secara otomatis berjalan, melainkan kita perlu memberi perintah dengan cara mengirim pesan
+      // Untuk mengirim pesan, kita bisa gunakan method "postMessage()"
+      // Sedangkan untuk menerima balasan dari Worker, kita bisa menggunakan event listener "onmesssage"
+      // Data yang diterima adalah object MessageEvent
+      // https://developer.mozilla.org/en-US/docs/Web/API/MessageEvent
+
+      const worker = new Worker("worker.js");
+      //   worker.onmessage = callback -> Cara 1
+      // Cara 2 dibawah
+      worker.addEventListener("message", function (message) {
+        console.log(message.data);
+      });
+
+      document.getElementById("buttonTask").onclick = function () {
+        worker.postMessage(20000); // Kirim data menggunakan postMessage
+      };
+    </script>
+  </body>
+</html>
